@@ -8,7 +8,7 @@ const Header = () =>{
             <div className="logo">
             <img src={Logo} height='50px'/>
             <span className="help-text">
-            RadeonWebRtc
+            WebRtc
             </span>
             </div>
             <div className="action-btn">

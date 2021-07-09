@@ -10,9 +10,9 @@ const HomePage = () =>{
         <div className="body">
           <div className="left-side">
             <div className="content">
-              <h2>Peer to Peer video meetings. Now free for everyone.</h2>
+              <h2>Premium video meetings. Now free for everyone.</h2>
               <p>
-              RadeonWebRtc Beta Built using React and Socket.io
+              WebRtc Beta Built using React and Socket.io
               </p>
               <div className="action-btn">
                 <button className="btn primary" >
@@ -27,7 +27,7 @@ const HomePage = () =>{
               </div>
             </div>
             <div className="help-text">
-              <a href="">Learn more</a> about Radeon-WebRtc
+              <a href="">Learn more</a> about WebRtc
             </div>
           </div>
           <div className="right-side">
