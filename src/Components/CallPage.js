@@ -8,12 +8,12 @@ const CallPage = () =>{
 
     return(
        <div className="callpage-container">
-           <video className="video-container" src="" controls></video>
+           <video className="video-container" src="" controls="false" autoplay="autoplay"></video>
 
            <CallPageHeader/>
-          { /*<CallPageFooter/>
-           <MeetingInfo/>
-          <Messenger/> */}
+            <MeetingInfo/> 
+           <CallPageFooter/>
+           <Messenger/> 
        </div>
     )
 }

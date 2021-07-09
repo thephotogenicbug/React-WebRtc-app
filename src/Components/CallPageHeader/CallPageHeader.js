@@ -15,7 +15,7 @@ const CallPageHeader = () =>{
               11.00 AM
           </div>
           <div className="header-items icon-block">
-          <i className="far fa-user-circle icon"></i>
+          <i className="far fa-user-circle icon profile"></i>
           </div>
       </div>
     )

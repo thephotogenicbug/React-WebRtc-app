@@ -4,7 +4,32 @@ const MeetingInfo = () =>{
 
 
     return(
-        <div>MeetingInfo</div>
+        <div className="meeting-info-block">
+            <div className="meeting-header">
+                <h3>Your meeting's ready</h3>
+                <i className="fas fa-times icon"></i>
+            </div>
+            <button className="add-people-btn">
+            <i className="fas fa-user icon"></i>
+                Add Others
+                </button>
+                <p className="info-text">
+                     share this meeting link with others you want in the meeting
+                </p>
+                <div className="meet-link">
+                    <span>Random url</span>
+                    <i className="far fa-clipboard icon"></i>
+                </div>
+                <div className="permission-text">
+                <i className="fas fa-shield-alt icon"></i>
+                <p className="small-text">
+                    people who use this meeting link must get your permission before they can join.
+                </p>
+                </div>
+                <p className="small-text">
+                    Joined as test@gmail.com
+                </p>
+        </div>
     )
 }
 export default MeetingInfo
