@@ -11,7 +11,7 @@ const CallPage = () =>{
            <video className="video-container" src="" controls="false" autoplay="autoplay"></video>
 
            <CallPageHeader/>
-            <MeetingInfo/> 
+            {/* <MeetingInfo/>  */}
            <CallPageFooter/>
            <Messenger/> 
        </div>

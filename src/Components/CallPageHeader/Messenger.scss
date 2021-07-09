@@ -4,11 +4,12 @@
     right: 0;
     background: #fff;
     height: calc(100vh - 90px);
-    width: 350px;
+    width: 309px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    box-shadow: 5px 4px 10px #00000029;
     .messenger-header {
       padding: 20px;
       display: flex;
