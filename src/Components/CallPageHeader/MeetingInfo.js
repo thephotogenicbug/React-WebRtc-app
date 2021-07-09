@@ -1,13 +1,19 @@
 import React from 'react';
 import './MeetingInfo.scss'
-const MeetingInfo = () =>{
+
+
+
+const MeetingInfo = ({setMeetInfoPopup, url}) =>{
 
 
     return(
         <div className="meeting-info-block">
             <div className="meeting-header">
                 <h3>Your meeting's ready</h3>
-                <i className="fas fa-times icon"></i>
+                <i className="fas fa-times icon" onClick={() =>{
+                    setMeetInfoPopup(false);
+                }}>
+                </i>
             </div>
             <button className="add-people-btn">
             <i className="fas fa-user icon"></i>
@@ -17,8 +23,8 @@ const MeetingInfo = () =>{
                      share this meeting link with others you want in the meeting
                 </p>
                 <div className="meet-link">
-                    <span>Random url</span>
-                    <i className="far fa-clipboard icon"></i>
+                    <span>{url}</span>
+                    <i className="far fa-clipboard icon" onClick={() => navigator.clipboard.writeText(url)}></i>
                 </div>
                 <div className="permission-text">
                 <i className="fas fa-shield-alt icon"></i>

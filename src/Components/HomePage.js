@@ -1,8 +1,20 @@
 import React from 'react';
+import { useHistory } from 'react-router';
+import shortid from 'shortid';
 import './HomePage.scss'
 import Header from './Header';
 import HeroImg from './hero-img.svg'
+
 const HomePage = () =>{
+
+  const history = useHistory();
+
+  const startCall = () =>{
+      // generate unique id 
+      const uid = shortid.generate();
+      // redirect to call page
+      history.push(`/${uid}#init`);
+  }
 
     return(
         <div className="home-page">
@@ -15,7 +27,7 @@ const HomePage = () =>{
               WebRtc Beta Built using React and Socket.io
               </p>
               <div className="action-btn">
-                <button className="btn primary" >
+                <button className="btn primary" onClick={startCall}>
                  <i class="fas fa-video icon-block"></i> New Meeting
                 </button>
                 <div className="input-block">
