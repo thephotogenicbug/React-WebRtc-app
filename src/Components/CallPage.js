@@ -13,7 +13,7 @@ import './CallPage.scss'
 
 
 let peer = null;
-const socket = io.connect("http://localhost:5555");
+const socket = io.connect("https://webrtc-heroku-server.herokuapp.com/");
 const initialState = [];
 
 const CallPage = () => {
@@ -63,7 +63,6 @@ const CallPage = () => {
       })
       .then((stream) => {
         setStreamObj(stream);
-
         peer = new Peer({
           initiator: isAdmin,
           trickle: false,
@@ -136,18 +135,72 @@ const CallPage = () => {
         });
 
       })
-      .catch(() => { });
+      .catch(() => { 
+        console.log("error")
+      });
   };
+
+  // screenshare function
+  const screenShare = () => {
+    navigator.mediaDevices
+      .getDisplayMedia({ cursor: true })
+      .then((screenStream) => {
+        peer.replaceTrack(
+          streamObj.getVideoTracks()[0],
+          screenStream.getVideoTracks()[0],
+          streamObj
+        );
+        setScreenCastStream(screenStream);
+        screenStream.getTracks()[0].onended = () => {
+          peer.replaceTrack(
+            screenStream.getVideoTracks()[0],
+            streamObj.getVideoTracks()[0],
+            streamObj
+          );
+        };
+        setIsPresenting(true);
+      });
+  };
+
+  const stopScreenShare = () => {
+    screenCastStream.getVideoTracks().forEach(function (track) {
+      track.stop();
+    });
+    peer.replaceTrack(
+      screenCastStream.getVideoTracks()[0],
+      streamObj.getVideoTracks()[0],
+      streamObj
+    );
+    setIsPresenting(false);
+  };
+
+   const toogleAudio = (value) =>{
+     streamObj.getAudioTracks()[0].enabled = value;
+     setIsAudio(value);
+   }
+
+   const disconnectCall = () =>{
+     peer.destroy();
+     history.push("/");
+     window.location.reload();
+   }
     return(
        <div className="callpage-container">
-           <video className="video-container" src="" controls></video>
+           <video className="video-container" controls autoplay style={{pointerEvents:'none'}}></video>
 
            <CallPageHeader/>
            {(isAdmin && meetInfoPopup) && (
             <MeetingInfo setMeetInfoPopup={setMeetInfoPopup} url={url}/> 
            )}
-           <CallPageFooter/>
-           <Messenger/> 
+           <CallPageFooter 
+           isPresenting={isPresenting}
+           stopScreenShare={stopScreenShare}
+           screenShare={screenShare} 
+           isAudio={isAudio}
+           toogleAudio={toogleAudio}
+           disconnectCall={disconnectCall}
+           />
+           {/* <Messenger/>  */}
        </div>
     )
 }
