@@ -13,7 +13,7 @@ import './CallPage.scss'
 
 
 let peer = null;
-const socket = io.connect("https://webrtc-heroku-server.herokuapp.com/");
+const socket = io.connect("https://webrtc-heroku-server.herokuapp.com");
 const initialState = [];
 
 const CallPage = () => {
