@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router';
 import CallPageHeader from './CallPageHeader/CallPageHeader';
 import CallPageFooter from './CallPageHeader/CallPageFooter';
 import MeetingInfo from './CallPageHeader/MeetingInfo';
-import Messenger from './CallPageHeader/Messenger';
 import MessageListReducer from '../reducer/MessageListReducer';
 import Peer from 'simple-peer';
 import {getRequest, postRequest } from './CallPageHeader/utils/apiRequests';
@@ -13,7 +12,7 @@ import './CallPage.scss'
 
 
 let peer = null;
-const socket = io.connect("https://webrtc-heroku-server.herokuapp.com");
+const socket = io.connect("http://localhost:5555");
 const initialState = [];
 
 const CallPage = () => {
@@ -92,34 +91,8 @@ const CallPage = () => {
           // wait for 'connect' event before using the data channel
         });
 
-        peer.on("data", (data) => {
-          clearTimeout(alertTimeout);
-          messageListReducer({
-            type: "addMessage",
-            payload: {
-              user: "other",
-              msg: data.toString(),
-              time: Date.now(),
-            },
-          });
 
-          setMessageAlert({
-            alert: true,
-            isPopup: true,
-            payload: {
-              user: "other",
-              msg: data.toString(),
-            },
-          });
-
-          alertTimeout = setTimeout(() => {
-            setMessageAlert({
-              ...messageAlert,
-              isPopup: false,
-              payload: {},
-            });
-          }, 10000);
-        });
+       
 
         peer.on("stream", (stream) => {
           // got remote video stream, now let's show it in a video tag
@@ -140,39 +113,6 @@ const CallPage = () => {
       });
   };
 
-  // screenshare function
-  const screenShare = () => {
-    navigator.mediaDevices
-      .getDisplayMedia({ cursor: true })
-      .then((screenStream) => {
-        peer.replaceTrack(
-          streamObj.getVideoTracks()[0],
-          screenStream.getVideoTracks()[0],
-          streamObj
-        );
-        setScreenCastStream(screenStream);
-        screenStream.getTracks()[0].onended = () => {
-          peer.replaceTrack(
-            screenStream.getVideoTracks()[0],
-            streamObj.getVideoTracks()[0],
-            streamObj
-          );
-        };
-        setIsPresenting(true);
-      });
-  };
-
-  const stopScreenShare = () => {
-    screenCastStream.getVideoTracks().forEach(function (track) {
-      track.stop();
-    });
-    peer.replaceTrack(
-      screenCastStream.getVideoTracks()[0],
-      streamObj.getVideoTracks()[0],
-      streamObj
-    );
-    setIsPresenting(false);
-  };
 
    const toogleAudio = (value) =>{
      streamObj.getAudioTracks()[0].enabled = value;
@@ -186,21 +126,18 @@ const CallPage = () => {
    }
     return(
        <div className="callpage-container">
-           <video className="video-container" controls autoplay style={{pointerEvents:'none'}}></video>
+           <video className="video-container" controls  ></video>
 
            <CallPageHeader/>
            {(isAdmin && meetInfoPopup) && (
             <MeetingInfo setMeetInfoPopup={setMeetInfoPopup} url={url}/> 
            )}
            <CallPageFooter 
-           isPresenting={isPresenting}
-           stopScreenShare={stopScreenShare}
-           screenShare={screenShare} 
            isAudio={isAudio}
            toogleAudio={toogleAudio}
            disconnectCall={disconnectCall}
            />
-           {/* <Messenger/>  */}
+       
        </div>
     )
 }
